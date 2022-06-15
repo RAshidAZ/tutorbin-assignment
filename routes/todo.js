@@ -8,7 +8,7 @@ const authenticator = require('../middlewares/authenticator')
 /* Controllers */
 const todo = require('../controllers/todo');
 
-/* POST user logins. */
+/* Add todo. */
 router.post('/v1/add', authenticator, function (req, res, next) {
     let data = req.body;
     data.authUser = req.authUser;
@@ -25,11 +25,28 @@ router.post('/v1/add', authenticator, function (req, res, next) {
 });
 
 
-/* POST user logins. */
+/* Ged todo. */
 router.get('/v1/all', authenticator, function (req, res, next) {
     let data = req.body;
     data.authUser = req.authUser;
     todo.getTodo(data, function (err, response) {
+        let status = 0;
+        if (err) {
+            console.log(err);
+            status = err.status;
+            return res.status(status).send(err);
+        }
+        status = response.status;
+        return res.status(status).send(response);
+    });
+});
+
+
+/* Ged todo. */
+router.patch('/v1/complete', authenticator, function (req, res, next) {
+    let data = req.body;
+    data.authUser = req.authUser;
+    todo.markTodoAsComplete(data, function (err, response) {
         let status = 0;
         if (err) {
             console.log(err);
