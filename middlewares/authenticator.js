@@ -20,6 +20,11 @@ module.exports = function(req, res, next){
                 });
             }
             console.log('Token encrypted successfully');
+            req.data.user = {};
+            req.data.user.id = data.id;
+            req.data.user.email = data.email;
+            req.data.user.role = data.role;
+            req.data.user.name = data.name;
             next();
         });
         if(!authorized){
