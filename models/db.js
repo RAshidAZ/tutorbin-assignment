@@ -3,7 +3,7 @@
  */
  const mongoose = require('mongoose');
  
- const connstring = process.env.mongoConnectionString;
+ const connstring = process.env.MONGODB_CON_STRING;
  console.log("connstring:", connstring);
  
  const connectWithRetry = function () {
