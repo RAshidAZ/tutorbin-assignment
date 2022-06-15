@@ -10,7 +10,7 @@ const addTodo = function (data, response, cb){
         return cb(sendResponse(400, null, "addTodo", null));
     }
     let insertTodo = data
-    insertTodo.userId = data.req.user.id
+    insertTodo.userId = data.authUser.id
     Todo.create(insertTodo, (err, result) => {
         if (err) {
             console.log('----Error in adding todo: ' + err)
@@ -21,3 +21,21 @@ const addTodo = function (data, response, cb){
     })
 }
 exports.addTodo = addTodo;
+
+const getTodo = function (data, response, cb){
+    if(!cb){
+        cb = response;
+    }
+    let findTodo = {
+        userId: data.authUser.id,
+        isDelete: false,
+    }
+    Todo.find(findTodo, (err, result) => {
+        if (err) {
+            return cb(sendResponse(500, null, "addTodo", null));
+        }
+        // console.log('-----ß-------------------------------------------------', result);
+        return cb(null, sendResponse(200, "Todo found", "addTodo", result))
+    })
+}
+exports.getTodo = getTodo;

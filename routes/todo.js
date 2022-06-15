@@ -11,8 +11,25 @@ const todo = require('../controllers/todo');
 /* POST user logins. */
 router.post('/v1/add', authenticator, function (req, res, next) {
     let data = req.body;
-    data.req = req.data;
+    data.authUser = req.authUser;
     todo.addTodo(data, function (err, response) {
+        let status = 0;
+        if (err) {
+            console.log(err);
+            status = err.status;
+            return res.status(status).send(err);
+        }
+        status = response.status;
+        return res.status(status).send(response);
+    });
+});
+
+
+/* POST user logins. */
+router.get('/v1/all', authenticator, function (req, res, next) {
+    let data = req.body;
+    data.authUser = req.authUser;
+    todo.getTodo(data, function (err, response) {
         let status = 0;
         if (err) {
             console.log(err);

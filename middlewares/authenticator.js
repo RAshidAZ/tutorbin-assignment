@@ -25,7 +25,8 @@ module.exports = function(req, res, next){
                 req.authUser.email = data.email;
                 req.authUser.role = data.role;
                 req.authUser.name = data.name;
-                next();
+                authorized = true;
+                return next();
             });
         }
         if(!authorized){
