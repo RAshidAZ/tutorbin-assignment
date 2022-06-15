@@ -3,8 +3,8 @@ const commonVariables = {
     
     APP_PORT: '7000',
     MONGODB_CON_STRING: 'mongodb://localhost/tutorbin-db',
-    PASS_SALT_STATIC: 'TUTORdSDFeFenyL2jaSDasdaeFenyL2jas@766sar7^^#&W^FSBGg7dBG7q3FSQBIN'
-    
+    PASS_SALT_STATIC: 'TUTORdSDFeFenyL2jaSDasdaeFenyL2jas@766sar7^^#&W^FSBGg7dBG7q3FSQBIN',
+    STATUS: [200, 500, 400, 401]
 }
 
 //setting the common variables
