@@ -40,28 +40,36 @@ const getTodo = function (data, response, cb) {
 }
 exports.getTodo = getTodo;
 
-
-
-const markTodoAsComplete = function (data, response, cb) {
+const updateTodo = function (data, response, cb) {
     if (!cb) {
         cb = response;
     }
     if (!data.todoId) {
-        return cb(sendResponse(400, "Provide todo id", "markTodoAsComplete", null));
+        return cb(sendResponse(400, "Provide todo id", "updateTodo", null));
     }
+    let message = "";
     let findTodo = {
         _id: data.todoId,
         isDelete: false,
     }
-    let updateTodo = {
-        isCompleted: true,
+    let updateTodo = {}
+
+    if(data.complete){
+        updateTodo.isCompleted = true
+        message = "Todo completed"
     }
+
+    if(data.delete){
+        updateTodo.isDelete = true
+        message = "Todo deleted"
+    }
+
     Todo.findOneAndUpdate(findTodo, updateTodo, (err, result) => {
         if (err) {
-            return cb(sendResponse(500, null, "markTodoAsComplete", null));
+            return cb(sendResponse(500, null, "updateTodo", null));
         }
         // console.log('-----ß-------------------------------------------------', result);
-        return cb(null, sendResponse(200, "Todo marked completed.", "markTodoAsComplete", null))
+        return cb(null, sendResponse(200, message, "updateTodo", null))
     })
 }
-exports.markTodoAsComplete = markTodoAsComplete;
+exports.updateTodo = updateTodo;

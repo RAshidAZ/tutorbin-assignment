@@ -42,11 +42,12 @@ router.get('/v1/all', authenticator, function (req, res, next) {
 });
 
 
-/* Ged todo. */
+/* Mark todo as completed. */
 router.patch('/v1/complete', authenticator, function (req, res, next) {
     let data = req.body;
     data.authUser = req.authUser;
-    todo.markTodoAsComplete(data, function (err, response) {
+    data.complete = true;
+    todo.updateTodo(data, function (err, response) {
         let status = 0;
         if (err) {
             console.log(err);
@@ -58,4 +59,21 @@ router.patch('/v1/complete', authenticator, function (req, res, next) {
     });
 });
 
+
+/* Delete todo. */
+router.patch('/v1/delete', authenticator, function (req, res, next) {
+    let data = req.body;
+    data.authUser = req.authUser;
+    data.delete = true;
+    todo.updateTodo(data, function (err, response) {
+        let status = 0;
+        if (err) {
+            console.log(err);
+            status = err.status;
+            return res.status(status).send(err);
+        }
+        status = response.status;
+        return res.status(status).send(response);
+    });
+});
 module.exports = router;
