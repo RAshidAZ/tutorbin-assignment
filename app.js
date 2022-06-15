@@ -13,7 +13,9 @@ app.use(bodyParser.urlencoded({
 }));
 
 const auth = require('./routes/auth');
+const todo = require('./routes/todo');
 
 app.use('/auth', auth);
+app.use('/todo', todo);
 
 module.exports = app;
